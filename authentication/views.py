@@ -1,7 +1,8 @@
-import email
 from django.shortcuts import render
 from requests import request
 from rest_framework import generics, status, views
+
+from authentication.renderers import UserRender
 from .serializers import RegisterSerializer, EmailverificationSerializer, LoginSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -19,6 +20,7 @@ from drf_yasg import openapi
 class RegisterView(generics.GenericAPIView):
 
     serializer_class = RegisterSerializer
+    renderer_classes = (UserRender,)
 
     def post(self, request):
         user = request.data
